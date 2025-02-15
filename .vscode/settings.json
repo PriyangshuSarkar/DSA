@@ -1,0 +1,10 @@
+{
+  // Exclude source paths entirely
+  "codeium.enableConfig": {
+    "*": false
+  },
+  "codeium.enableCodeLens": false,
+  "[java]": {
+    "editor.defaultFormatter": "Oracle.oracle-java"
+  }
+}
