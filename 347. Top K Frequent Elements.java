@@ -1,40 +1,57 @@
-
 import java.util.*;
 
 class Solution {
-
     public int[] topKFrequent(int[] nums, int k) {
 
         HashMap<Integer, Integer> map = new HashMap<>();
 
-        for (int n : nums) {
-            map.put(n, map.getOrDefault(n, 0) + 1);
+        for (int i : nums) {
+            map.put(i, map.getOrDefault(i, 0) + 1);
         }
 
-        PriorityQueue<Map.Entry<Integer, Integer>> heap = new PriorityQueue<>(Comparator.comparingInt(Map.Entry::getValue));
+        @SuppressWarnings({ "unsaved", "unchecked" })
+        List<Integer>[] bucket = new List[nums.length + 1];
 
-        for (Map.Entry<Integer, Integer> mapEntry : map.entrySet()) {
-            heap.add(mapEntry);
-
-            if (heap.size() > k) {
-                heap.poll();
+        for (int key : map.keySet()) {
+            int freq = map.get(key);
+            if (bucket[freq] == null) {
+                bucket[freq] = new ArrayList<>();
             }
+            bucket[freq].add(key);
         }
 
+        int bucketSize = bucket.length;
+        int i = bucketSize - 1;
+        int j = k - 1;
         int[] result = new int[k];
-
-        for (int i = k - 1; i >= 0; i--) {
-            result[i] = heap.poll().getKey();
+        while (i >= 0 && j >= 0) {
+            if (bucket[i] != null) {
+                for (int n : bucket[i]) {
+                    result[j] = n;
+                    j--;
+                }
+            }
+            i--;
         }
 
         return result;
     }
 
     public static void main(String[] args) {
-        Solution solution = new Solution();
-        int[] nums = {1, 1, 1, 2, 2, 3};
+
+        int[] nums = new int[10];
+        Random random = new Random();
+
+        for (int i = 0; i < 10; i++) {
+            nums[i] = random.nextInt(10) + 1; // Generates numbers between 1 and 1000
+        }
+
         int k = 2;
 
-        System.out.println(Arrays.toString(nums) + "  " + k + "  " + Arrays.toString(solution.topKFrequent(nums, k)));
+        Solution solution = new Solution();
+
+        System.out.println(Arrays.toString(nums));
+        System.out.println(Arrays.toString(solution.topKFrequent(nums, k)));
     }
+
 }
