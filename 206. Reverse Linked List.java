@@ -26,7 +26,7 @@ class Solution {
         Solution solution = new Solution();
 
         // Test case 1
-        int[] values1 = {1, 2, 3, 4, 5};
+        int[] values1 = { 1, 2, 3, 4, 5 };
         ListNode head1 = createList(values1);
         System.out.println("Original List:");
         printList(head1);
@@ -35,7 +35,7 @@ class Solution {
         printList(reversed1);
 
         // Test case 2
-        int[] values2 = {1};
+        int[] values2 = { 1 };
         ListNode head2 = createList(values2);
         System.out.println("\nOriginal List:");
         printList(head2);

@@ -2,47 +2,51 @@ import java.util.*;
 
 class Solution {
     public int findKthLargest(int[] nums, int k) {
+
         return quickSelect(nums, 0, nums.length - 1, nums.length - k);
+
     }
 
-    private int quickSelect(int[] nums, int low, int high, int k) {
-        if (low >= high) {
-            return nums[low]; // Base case: Only one element left
+    public int quickSelect(int[] nums, int start, int end, int k) {
+
+        if (start == end) {
+            return nums[start];
         }
 
-        int pivotIndex = partition(nums, low, high);
+        int pivotIndex = partition(nums, start, end);
 
         if (pivotIndex == k) {
-            return nums[pivotIndex]; // Found kth largest
-        } else if (pivotIndex > k) {
-            return quickSelect(nums, low, pivotIndex - 1, k); // Search left partition
+            return nums[pivotIndex];
+        } else if (pivotIndex < k) {
+            return quickSelect(nums, pivotIndex + 1, end, k);
         } else {
-            return quickSelect(nums, pivotIndex + 1, high, k); // Search right partition
+            return quickSelect(nums, start, pivotIndex - 1, k);
         }
+
     }
 
-    private int partition(int[] nums, int low, int high) {
-        int pivotIndex = new Random().nextInt(high - low + 1) + low;
+    public int partition(int[] nums, int start, int end) {
+
+        int pivotIndex = new Random().nextInt(end - start + 1) + start;
+
         int pivot = nums[pivotIndex];
 
-        swap(nums, pivotIndex, high); // Move pivot to the end
-        int storeIndex = low; // Corrected initialization
+        swap(nums, pivotIndex, end);
 
-        for (int i = low; i <= high; i++) {
+        int sortIndex = start;
+
+        for (int i = start; i < end; i++) {
             if (nums[i] < pivot) {
-                if (nums[storeIndex] > nums[i]) {
-                    swap(nums, storeIndex, i);
-                }
-                storeIndex++;
-            } else if (nums[i] == pivot) {
-                swap(nums, storeIndex, i);
+                swap(nums, sortIndex, i);
+                sortIndex++;
             }
         }
 
-        return storeIndex;
+        swap(nums, sortIndex, end);
+        return sortIndex;
     }
 
-    private void swap(int[] nums, int i, int j) {
+    public void swap(int[] nums, int i, int j) {
         int temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;

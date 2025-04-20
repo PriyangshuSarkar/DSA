@@ -1,7 +1,0 @@
-{
-  // Exclude source paths entirely
-  "codeium.enableConfig": {
-    "*": false
-  },
-  "codeium.enableCodeLens": false
-}

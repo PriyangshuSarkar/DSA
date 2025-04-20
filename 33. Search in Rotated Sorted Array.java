@@ -3,44 +3,46 @@ import java.util.*;
 class Solution {
     public int search(int[] nums, int target) {
 
-        int left = 0;
-        int right = nums.length - 1;
-
-        if (nums[left] < target) {
-
+        if (nums == null || nums.length == 0) {
+            return -1;
         }
 
-        while (left <= right) {
-            int mid = (left + right) / 2;
+        int l = 0;
+        int r = nums.length - 1;
 
-            visualizeSearch(nums, left, mid, right, target);
+        while (l <= r) {
+            int m = (l + r) / 2;
+            visualizeSearch(nums, l, m, r, target);
 
-            if (target == nums[mid]) {
-                return mid;
+            if (nums[m] == target) {
+                return m;
             }
-            if (target == nums[left]) {
-                return left;
+            if (nums[l] == target) {
+                return l;
             }
-            if (target == nums[right]) {
-                return right;
+            if (nums[r] == target) {
+                return r;
             }
 
-            if (nums[left] <= nums[mid]) {
-                if (target < nums[left] || nums[mid] < target) {
-                    left = mid + 1;
+            if (nums[l] <= nums[m]) {
+                if (target < nums[l] || nums[m] < target) {
+
+                    l = m + 1;
                 } else {
-                    right = mid - 1;
+                    r = m - 1;
                 }
             } else {
-                if (target < nums[mid] || nums[right] < target) {
-                    right = mid - 1;
+                if (target < nums[m] || nums[r] < target) {
+                    r = m - 1;
                 } else {
-                    left = mid + 1;
+                    l = m + 1;
                 }
             }
+
         }
 
         return -1;
+
     }
 
     private void visualizeSearch(int[] nums, int left, int mid, int right, int target) {
